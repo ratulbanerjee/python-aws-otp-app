@@ -132,35 +132,11 @@ def validation(request):
 
 
         else:
-            '''
-            response = requests.get('https://07oq90nb27.execute-api.us-west-2.amazonaws.com/prod/otp')
-            response_object = response.json()
-
-            otp = int(response_object['otp'])
-
-            current_time=str(datetime.datetime.now())
-            table.update_item(
-                Key={
-                    'id': username
-
-                },
-
-                UpdateExpression='SET OTP =:otp, timestamps =:time',
-                ExpressionAttributeValues={
-                    ':otp': otp,
-                    ':time': current_time
-                }
-            )
-
-            return HttpResponse("otp expired")
             
-            
-    '''
-
             return HttpResponse('otp expired')
 
     except BaseException as e:
-        print(e)
+        print("error occured in otp validation")
 
 
 
