@@ -20,7 +20,25 @@ def home(request):
 def otp_generation(request):
 
     username = request.POST.get('username')
-    mobile=request.POST.get('mobile')
+    #mobile=request.POST.get('mobile')
+
+    try:
+
+        dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
+        table = dynamodb.Table('student')
+        response = table.get_item(
+            Key={
+                'id': username
+
+            }
+        )
+        item = response['Item']
+
+        mobile = item['mobile']
+
+    except BaseException as e:
+        return HttpResponse(e)
+
 
 
     try:
@@ -36,7 +54,7 @@ def otp_generation(request):
 
 
 
-    #otp = input("enter your otp")
+    #sending the otp to registered mobile no.
 
     try:
 
@@ -137,6 +155,7 @@ def validation(request):
 
     except BaseException as e:
         print("error occured in otp validation")
+
 
 
 
